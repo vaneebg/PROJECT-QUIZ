@@ -1,36 +1,121 @@
 // alert("one piece mola")
-
-const getA = document.getElementById('cardA')
-let myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
-
 const home = document.getElementById('home')
 const quiz = document.getElementById('quiz')
-
-// esto se cambia mas tarde porque no quiero cerrrarlo
-const closeButton = document.getElementById('buttonNext')
-
+const buttonNext = document.getElementById('buttonNext')
 const buttonStart = document.getElementById('buttonStart')
+const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
+const questionTitle = document.getElementById("question")
+const answerOptions = document.getElementById("answerOptions")
+
+let currentQuestionIndex;
+
+const questionsList = [{
+        question: "Pregunta 1",
+        answers: [
+            { text: "respuesta", correct: false },
+            { text: "respuesta2", correct: false },
+            { text: "respuesta3", correct: false },
+            { text: "respuesta4", correct: true }
+        ]
+    },
+    {
+        question: "Pregunta 2",
+        answers: [
+            { text: "respuesta1", correct: false },
+            { text: "respuesta2", correct: false },
+            { text: "respuesta3", correct: false },
+            { text: "respuesta4", correct: true }
+        ]
+    },
+    {
+        question: "Pregunta 3",
+        answers: [
+            { text: "respuesta1", correct: false },
+            { text: "respuesta2", correct: false },
+            { text: "respuesta3", correct: false },
+            { text: "respuesta4", correct: true }
+        ]
+    }
+];
+
+// declarar las demás cards más tarde
+const getA = document.getElementById('cardA')
 
 
 
 
-const startQuiz =() =>{
+function abrir() {
+    myModal.show();
+}
+
+
+
+
+getA.addEventListener("click", abrir)
+
+const setStatusClass = (element, correct) => {
+    if (correct) {
+        element.classList.add("opacity-100")
+    } else {
+        element.classList.add("opacity-25")
+    }
+}
+
+
+
+
+const selectAnswer = () => {
+    Array.from(answerOptions.children).forEach(card => {
+        setStatusClass(card, card.dataset.correct);
+    });
+    // if(!questionsList.length>currentQuestionIndex +1){
+    //     aquí iría que te lleve a otra sección() donde se muestre resultado y tendrá su propio boton de restart"
+    // }
+}
+
+
+const showQuestion = (questionObj) => {
+    questionTitle.innerText = questionObj.question;
+    question.answers.forEach(answer => {
+        const card = document.createElement("card");
+        card.innerHTML = ` 
+                <div class="col">
+                <div class="card" id="cardA">
+                    <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${answer.text}</h5>
+                    </div>
+                </div>
+            </div>
+`
+            // revisar aquí nombre
+        card.classList.add("OpacityOne");
+        if (answer.correct) {
+            card.dataset.correct = true;
+        }
+        card.addEventListener("click", selectAnswer);
+        answerOptions.appendChild(card);
+
+    })
+
+}
+
+
+// const resetState=()=>{
+//     buttonNext.myModal.hide();
+//     whil
+// }
+
+const nextQuestion = () => {
+    resetState();
+    showQuestion(questionsList[currentQuestionIndex]);
+
+}
+
+const startQuiz = () => {
     home.classList.add('d-none')
     quiz.classList.remove('d-none')
-} 
-buttonStart.addEventListener('click',startQuiz  )
-
-
-// function abrir() {
-//     myModal.show();
-// }
-// getA.addEventListener("click",abrir)
-// funcion anonima :s 
-<<<<<<< HEAD
-getA.addEventListener("click", () => myModal.show())
-=======
-getA.addEventListener("click", () => myModal.show() )
-
-
-closeButton.addEventListener("click", ()=>myModal.hide())
->>>>>>> 41ee05ca67155dbf51fa7f61e884c63ac5408442
+    currentQuestionIndex = 0;
+    nextQuestion()
+}
+buttonStart.addEventListener('click', startQuiz)
