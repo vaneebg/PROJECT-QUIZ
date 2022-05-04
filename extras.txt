@@ -3,3 +3,9 @@ https://freefrontend.com/javascript-progress-bars/
 
 gradients
 https://codepen.io/quadbaup/full/ZEQqzqM
+
+
+
+Corregir: 
+
+que me aplica las clases de "bootstrap" de opacidad pero en realidad no
