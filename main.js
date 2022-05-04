@@ -44,14 +44,17 @@ const getA = document.getElementById('cardA')
 
 
 
-function abrir() {
+function openModal() {
     myModal.show();
+}
+
+function closeModal() {
+    myModal.hide()
 }
 
 
 
-
-getA.addEventListener("click", abrir)
+getA.addEventListener("click", openModal)
 
 const setStatusClass = (element, correct) => {
     if (correct) {
@@ -101,10 +104,12 @@ const showQuestion = (questionObj) => {
 }
 
 
-// const resetState=()=>{
-//     buttonNext.myModal.hide();
-//     whil
-// }
+const resetState = () => {
+    closeModal()
+    while (answerOptions.firstChild) {
+        answerOptions.removeChild(answerOptions.firstChild)
+    }
+}
 
 const nextQuestion = () => {
     resetState();
