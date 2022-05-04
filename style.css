@@ -4,6 +4,15 @@ h1 {
 
 #body {
     height: 100vh;
+    cursor: url(/Assets/cursorluffy.png), pointer;
+}
+
+
+/* MIRAR AL FINAL QUÉ SELECCIONAMOS CUANDO LE DAMOS A LA CARD PARA ASÍ HACERLE UN HOVER */
+
+#buttonStart:hover,
+#buttonNext:hover {
+    cursor: url(/Assets/170512.png), pointer;
 }
 
 #buttonNext {
