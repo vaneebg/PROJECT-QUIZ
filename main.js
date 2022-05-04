@@ -9,4 +9,4 @@ function abrir() {
     .modal();
 }
 
-getA.addEventListener("click",abrir)
+getA.addEventListener("click", abrir)
