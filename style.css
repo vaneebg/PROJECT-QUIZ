@@ -6,3 +6,10 @@ h1{
     background-color: rosybrown;
 }
 
+
+#buttonNext{
+    color:red;
+    background-color: white;
+    border-color:green;
+    font-weight: 800;
+}
