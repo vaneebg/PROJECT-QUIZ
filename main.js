@@ -53,8 +53,7 @@ function closeModal() {
 }
 
 
-
-getA.addEventListener("click", openModal)
+// getA.addEventListener("click", openModal)
 
 const setStatusClass = (element, correct) => {
     if (correct) {
@@ -68,9 +67,12 @@ const setStatusClass = (element, correct) => {
 
 
 const selectAnswer = () => {
+    console.log("He entrado en respuestas")
     Array.from(answerOptions.children).forEach(card => {
         setStatusClass(card, card.dataset.correct);
     });
+
+    openModal()
     // if(!questionsList.length>currentQuestionIndex +1){
     //     aquí iría que te lleve a otra sección() donde se muestre resultado y tendrá su propio boton de restart"
     // }
@@ -79,11 +81,12 @@ const selectAnswer = () => {
 
 const showQuestion = (questionObj) => {
     questionTitle.innerText = questionObj.question;
-    question.answers.forEach(answer => {
+    questionObj.answers.forEach(answer => {
         const card = document.createElement("card");
+        // console.log("he creado tarjetas")
         card.innerHTML = ` 
                 <div class="col">
-                <div class="card" id="cardA">
+                <div class="card" id="card" >
                     <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
                     <div class="card-body text-center">
                         <h5 class="card-title">${answer.text}</h5>
@@ -92,7 +95,8 @@ const showQuestion = (questionObj) => {
             </div>
 `
             // revisar aquí nombre
-        card.classList.add("OpacityOne");
+
+        card.classList.add("cardAnswer");
         if (answer.correct) {
             card.dataset.correct = true;
         }
