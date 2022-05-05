@@ -45,14 +45,16 @@ const getA = document.getElementById('cardA')
 
 
 
-function hideView(){
+function hideView() {
     home.classList.add('d-none')
     quiz.classList.add('d-none')
     results.classList.add('d-none')
 }
+
 function openModal() {
     myModal.show();
 }
+
 function closeModal() {
     myModal.hide()
 }
@@ -61,10 +63,10 @@ function closeModal() {
 // getA.addEventListener("click", openModal)
 
 const setStatusClass = (element, correct) => {
-    
-    if (correct) {    
+
+    if (correct) {
         element.children[0].className = "card bg-success"
-        // element.children[0].classList.add("border-5")
+            // element.children[0].classList.add("border-5")
     } else {
         element.children[0].className = "card bg-danger"
     }
@@ -74,23 +76,23 @@ const setStatusClass = (element, correct) => {
 
 
 const selectAnswer = () => {
-   
+
     Array.from(answerOptions.children).forEach(card => {
         setStatusClass(card, card.dataset.correct);
     });
 
     openModal()
-    if(questionsList.length>currentQuestionIndex +1){
+    if (questionsList.length > currentQuestionIndex + 1) {
 
-    } else{
+    } else {
 
-        buttonNext.innerText="Check results"
-        buttonNext.addEventListener("click",() =>{
+        buttonNext.innerText = "Check results"
+        buttonNext.addEventListener("click", () => {
             hideView()
             results.classList.remove('d-none')
         })
     }
- 
+
 }
 
 
@@ -117,11 +119,11 @@ const showQuestion = (questionObj) => {
         }
 
         // añadir un eventlistener para comprobar esto
-        if (card.correct == true){
+        if (card.correct == true) {
             rightAnswers++
         }
 
-        
+
         card.addEventListener("click", selectAnswer);
         answerOptions.appendChild(card);
 
@@ -153,6 +155,15 @@ buttonStart.addEventListener('click', startQuiz)
 buttonNext.addEventListener("click", () => {
     currentQuestionIndex++;
     nextQuestion();
-  })
-  
+})
 
+
+// COGER DATOS DE LA API
+const questions1 = async() => {
+    const respuesta = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
+    console.log(respuesta.data.results)
+    return respuesta.data.results;
+}
+
+const preguntas1 = questions1()
+console.log(preguntas1)
