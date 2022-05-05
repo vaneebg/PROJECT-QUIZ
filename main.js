@@ -57,9 +57,13 @@ function closeModal() {
 
 const setStatusClass = (element, correct) => {
     if (correct) {
-        element.classList.add("opacity-100")
+        element.classList.children.children.add("card")
+        element.classList.children.children.add("bg-primary")
+       
     } else {
+        element.classList.add("card")
         element.classList.add("opacity-25")
+
     }
 }
 
@@ -72,7 +76,7 @@ const selectAnswer = () => {
         setStatusClass(card, card.dataset.correct);
     });
 
-    openModal()
+    // openModal()
     // if(!questionsList.length>currentQuestionIndex +1){
     //     aquí iría que te lleve a otra sección() donde se muestre resultado y tendrá su propio boton de restart"
     // }

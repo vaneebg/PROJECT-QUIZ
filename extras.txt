@@ -9,3 +9,10 @@ https://codepen.io/quadbaup/full/ZEQqzqM
 Corregir: 
 
 que me aplica las clases de "bootstrap" de opacidad pero en realidad no
+
+
+
+Retos a comentar en el Readme: 
+
+Se supone que al seleccionar una opcion, nos muestta la correcta con opacidad 100 y las demás les baja la opacidad para que queden en segundo plano
+
