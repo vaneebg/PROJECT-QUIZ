@@ -158,10 +158,6 @@ buttonNext.addEventListener("click", () => {
     nextQuestion();
 })
 
-// const funcionPatata = (jaja) => {
-
-//     console.log(jaja);
-// }
 
 // COGER DATOS DE LA API
 const questionsAPI = async() => {
