@@ -9,6 +9,7 @@ const questionTitle = document.getElementById("question")
 const answerOptions = document.getElementById("answerOptions")
 
 let currentQuestionIndex;
+let rightAnswers;
 
 const questionsList = [{
         question: "Pregunta 1",
@@ -60,17 +61,12 @@ function closeModal() {
 // getA.addEventListener("click", openModal)
 
 const setStatusClass = (element, correct) => {
-    console.log("he entrado en set Status")
-    console.log(element)
-    console.log(element.children)
-    if (correct) {
-        
+    
+    if (correct) {    
         element.children[0].className = "card bg-success"
         // element.children[0].classList.add("border-5")
     } else {
-       
         element.children[0].className = "card bg-danger"
-
     }
 }
 
@@ -78,7 +74,7 @@ const setStatusClass = (element, correct) => {
 
 
 const selectAnswer = () => {
-    console.log("He entrado en respuestas")
+   
     Array.from(answerOptions.children).forEach(card => {
         setStatusClass(card, card.dataset.correct);
     });
@@ -119,6 +115,13 @@ const showQuestion = (questionObj) => {
         if (answer.correct) {
             card.dataset.correct = true;
         }
+
+        // añadir un eventlistener para comprobar esto
+        if (card.correct == true){
+            rightAnswers++
+        }
+
+        
         card.addEventListener("click", selectAnswer);
         answerOptions.appendChild(card);
 
