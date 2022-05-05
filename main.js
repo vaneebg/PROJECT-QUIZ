@@ -157,13 +157,28 @@ buttonNext.addEventListener("click", () => {
     nextQuestion();
 })
 
+const funcionPatata = (jaja) => {
 
-// COGER DATOS DE LA API
-const questions1 = async() => {
-    const respuesta = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
-    console.log(respuesta.data.results)
-    return respuesta.data.results;
+    console.log(jaja);
 }
 
-const preguntas1 = questions1()
-console.log(preguntas1)
+// COGER DATOS DE LA API
+const questionsAPI = async() => {
+    const arrayAPI = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
+    return arrayAPI.data.results;
+}
+
+questionsAPI().then(elementos => {
+    elementos.forEach(patata => {
+        const { question } = patata
+        const questionClear = question.replaceAll(/&quot;/ig, '').replaceAll(/&#039;/ig, '"')
+        console.log(questionClear);
+        // Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
+        funcionPatata(questionClear)
+    })
+})
+
+// DESESTRUCTURAMOS LA ARRAY
+
+// const [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10] = arrayAPI
+// console.log(question2)
