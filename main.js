@@ -128,3 +128,8 @@ const startQuiz = () => {
     nextQuestion()
 }
 buttonStart.addEventListener('click', startQuiz)
+buttonNext.addEventListener("click", () => {
+    console.log("click en modal")
+    currentQuestionIndex++;
+    nextQuestion();
+  });
