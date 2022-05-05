@@ -1,6 +1,7 @@
 // alert("one piece mola")
 const home = document.getElementById('home')
 const quiz = document.getElementById('quiz')
+const results = document.getElementById('results')
 const buttonNext = document.getElementById('buttonNext')
 const buttonStart = document.getElementById('buttonStart')
 const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {});
@@ -43,11 +44,14 @@ const getA = document.getElementById('cardA')
 
 
 
-
+function hideView(){
+    home.classList.add('d-none')
+    quiz.classList.add('d-none')
+    results.classList.add('d-none')
+}
 function openModal() {
     myModal.show();
 }
-
 function closeModal() {
     myModal.hide()
 }
@@ -80,9 +84,17 @@ const selectAnswer = () => {
     });
 
     openModal()
-    // if(!questionsList.length>currentQuestionIndex +1){
-    //     aquí iría que te lleve a otra sección() donde se muestre resultado y tendrá su propio boton de restart"
-    // }
+    if(questionsList.length>currentQuestionIndex +1){
+
+    } else{
+
+        buttonNext.innerText="Check results"
+        buttonNext.addEventListener("click",() =>{
+            hideView()
+            results.classList.remove('d-none')
+        })
+    }
+ 
 }
 
 
@@ -129,14 +141,15 @@ const nextQuestion = () => {
 }
 
 const startQuiz = () => {
-    home.classList.add('d-none')
+    hideView()
     quiz.classList.remove('d-none')
     currentQuestionIndex = 0;
     nextQuestion()
 }
 buttonStart.addEventListener('click', startQuiz)
 buttonNext.addEventListener("click", () => {
-    console.log("click en modal")
     currentQuestionIndex++;
     nextQuestion();
-  });
+  })
+  
+
