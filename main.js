@@ -11,34 +11,34 @@ const answerOptions = document.getElementById("answerOptions")
 let currentQuestionIndex;
 let rightAnswers;
 
-const questionsList = [{
-        question: "Pregunta 1",
-        answers: [
-            { text: "respuesta1", correct: false },
-            { text: "respuesta2", correct: false },
-            { text: "respuesta3", correct: false },
-            { text: "respuesta4", correct: true }
-        ]
-    },
-    {
-        question: "Pregunta 2",
-        answers: [
-            { text: "respuesta1", correct: false },
-            { text: "respuesta2", correct: false },
-            { text: "respuesta3", correct: false },
-            { text: "respuesta4", correct: true }
-        ]
-    },
-    {
-        question: "Pregunta 3",
-        answers: [
-            { text: "respuesta1", correct: false },
-            { text: "respuesta2", correct: false },
-            { text: "respuesta3", correct: false },
-            { text: "respuesta4", correct: true }
-        ]
-    }
-];
+// const questionsList = [{
+//         question: "Pregunta 1",
+//         answers: [
+//             { text: "respuesta1", correct: false },
+//             { text: "respuesta2", correct: false },
+//             { text: "respuesta3", correct: false },
+//             { text: "respuesta4", correct: true }
+//         ]
+//     },
+//     {
+//         question: "Pregunta 2",
+//         answers: [
+//             { text: "respuesta1", correct: false },
+//             { text: "respuesta2", correct: false },
+//             { text: "respuesta3", correct: false },
+//             { text: "respuesta4", correct: true }
+//         ]
+//     },
+//     {
+//         question: "Pregunta 3",
+//         answers: [
+//             { text: "respuesta1", correct: false },
+//             { text: "respuesta2", correct: false },
+//             { text: "respuesta3", correct: false },
+//             { text: "respuesta4", correct: true }
+//         ]
+//     }
+// ];
 
 // declarar las demás cards más tarde
 const getA = document.getElementById('cardA')
@@ -82,7 +82,7 @@ const selectAnswer = () => {
     });
 
     openModal()
-    if (questionsList.length > currentQuestionIndex + 1) {
+    if (arrayQuestions.length > currentQuestionIndex + 1) {
 
     } else {
 
@@ -96,9 +96,10 @@ const selectAnswer = () => {
 }
 
 
-const showQuestion = (questionObj) => {
-    questionTitle.innerText = questionObj.question;
-    questionObj.answers.forEach(answer => {
+const showQuestion = (arrayQuestions) => {
+    console.log(arrayQuestions[1])
+    questionTitle.innerHTML = arrayQuestions[0]
+    arrayQuestions[1].forEach(answer => {
         const card = document.createElement("card");
         // console.log("he creado tarjetas")
         card.innerHTML = ` 
@@ -141,7 +142,7 @@ const resetState = () => {
 
 const nextQuestion = () => {
     resetState();
-    showQuestion(questionsList[currentQuestionIndex]);
+    showQuestion(arrayQuestions[currentQuestionIndex]);
 
 }
 
@@ -157,26 +158,36 @@ buttonNext.addEventListener("click", () => {
     nextQuestion();
 })
 
-const funcionPatata = (jaja) => {
+// const funcionPatata = (jaja) => {
 
-    console.log(jaja);
-}
+//     console.log(jaja);
+// }
 
 // COGER DATOS DE LA API
 const questionsAPI = async() => {
-    const arrayAPI = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
-    return arrayAPI.data.results;
-}
+        const arrayAPI = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
+            // console.log(arrayAPI.data.results)
+        return arrayAPI.data.results;
+    }
+    // const arrayQuestions = []
+questionsAPI().then(elements => {
+        elements.forEach(element => {
 
-questionsAPI().then(elementos => {
-    elementos.forEach(patata => {
-        const { question } = patata
-        const questionClear = question.replaceAll(/&quot;/ig, '').replaceAll(/&#039;/ig, '"')
-        console.log(questionClear);
-        // Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
-        funcionPatata(questionClear)
+            const { correct_answer: correctAnswer, question, incorrect_answers: incorrectAnswersArray } = element
+            const answers = [correctAnswer, ...incorrectAnswersArray]
+
+            // console.log(element)
+            // console.log(correctAnswer)
+            // console.log(incorrectAnswersArray)
+            const questionClear = question.replaceAll(/&quot;/ig, '').replaceAll(/&#039;/ig, '');
+            const arrayQuestions = [questionClear, answers]
+                // arrayQuestions.push(element);
+
+            // Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
+            showQuestion(arrayQuestions)
+        })
     })
-})
+    // console.log(arrayQuestions);
 
 // DESESTRUCTURAMOS LA ARRAY
 
