@@ -12,7 +12,7 @@ let currentQuestionIndex;
 const questionsList = [{
         question: "Pregunta 1",
         answers: [
-            { text: "respuesta", correct: false },
+            { text: "respuesta1", correct: false },
             { text: "respuesta2", correct: false },
             { text: "respuesta3", correct: false },
             { text: "respuesta4", correct: true }
@@ -56,13 +56,16 @@ function closeModal() {
 // getA.addEventListener("click", openModal)
 
 const setStatusClass = (element, correct) => {
+    console.log("he entrado en set Status")
+    console.log(element)
+    console.log(element.children)
     if (correct) {
-        element.classList.children.children.add("card")
-        element.classList.children.children.add("bg-primary")
-       
+        
+        element.children[0].className = "card bg-success"
+        // element.children[0].classList.add("border-5")
     } else {
-        element.classList.add("card")
-        element.classList.add("opacity-25")
+       
+        element.children[0].className = "card bg-danger"
 
     }
 }
@@ -76,7 +79,7 @@ const selectAnswer = () => {
         setStatusClass(card, card.dataset.correct);
     });
 
-    // openModal()
+    openModal()
     // if(!questionsList.length>currentQuestionIndex +1){
     //     aquí iría que te lleve a otra sección() donde se muestre resultado y tendrá su propio boton de restart"
     // }
@@ -89,18 +92,18 @@ const showQuestion = (questionObj) => {
         const card = document.createElement("card");
         // console.log("he creado tarjetas")
         card.innerHTML = ` 
-                <div class="col">
+                
                 <div class="card" id="card" >
                     <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
                     <div class="card-body text-center">
                         <h5 class="card-title">${answer.text}</h5>
                     </div>
                 </div>
-            </div>
+            
 `
             // revisar aquí nombre
-
-        card.classList.add("cardAnswer");
+            // card.classList.add("card");
+            // card.classList.add("cardAnswer");
         if (answer.correct) {
             card.dataset.correct = true;
         }

@@ -8,7 +8,7 @@ https://codepen.io/quadbaup/full/ZEQqzqM
 
 Corregir: 
 
-que me aplica las clases de "bootstrap" de opacidad pero en realidad no
+revisar linea 79 para abrir modal
 
 
 
