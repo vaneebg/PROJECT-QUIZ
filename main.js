@@ -163,11 +163,8 @@ buttonNext.addEventListener("click", () => {
 const questionsAPI = async() => {
         const arrayAPI = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
             // console.log(arrayAPI.data.results)
-        return arrayAPI.data.results;
-    }
-    // const arrayQuestions = []
-questionsAPI().then(elements => {
-        elements.forEach(element => {
+        let arrayQuestions = []
+        arrayAPI.data.results.forEach(element => {
 
             const { correct_answer: correctAnswer, question, incorrect_answers: incorrectAnswersArray } = element
             const answers = [correctAnswer, ...incorrectAnswersArray]
@@ -176,14 +173,25 @@ questionsAPI().then(elements => {
             // console.log(correctAnswer)
             // console.log(incorrectAnswersArray)
             const questionClear = question.replaceAll(/&quot;/ig, '').replaceAll(/&#039;/ig, '');
-            const arrayQuestions = [questionClear, answers]
-                // arrayQuestions.push(element);
-
-            // Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
-            showQuestion(arrayQuestions)
+            const arrayQuestions1 = [questionClear, answers]
+            arrayQuestions.push(arrayQuestions1)
+                // console.log(arrayQuestions)
         })
-    })
-    // console.log(arrayQuestions);
+        return arrayQuestions;
+    }
+    // const arrayQuestions = []
+questionsAPI().then(data => {
+    console.log(data)
+        // aqui metemos funciones que necesiten esos datos
+        // 
+})
+
+
+
+// Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
+// showQuestion(arrayQuestions)
+
+// console.log(arrayQuestions);
 
 // DESESTRUCTURAMOS LA ARRAY
 
