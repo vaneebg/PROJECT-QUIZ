@@ -16,8 +16,8 @@ const questionsList = [{
         answers: [
             { text: "respuesta1", correct: false },
             { text: "respuesta2", correct: false },
-            { text: "respuesta3", correct: false },
-            { text: "respuesta4", correct: true }
+            { text: "respuesta3", correct: true },
+            { text: "respuesta4", correct: false }
         ]
     },
     {
@@ -32,10 +32,10 @@ const questionsList = [{
     {
         question: "Pregunta 3",
         answers: [
-            { text: "respuesta1", correct: false },
+            { text: "respuesta1", correct: true },
             { text: "respuesta2", correct: false },
             { text: "respuesta3", correct: false },
-            { text: "respuesta4", correct: true }
+            { text: "respuesta4", correct: false }
         ]
     }
 ];
@@ -51,7 +51,15 @@ function hideView(){
     results.classList.add('d-none')
 }
 function openModal() {
+
+
     myModal.show();
+    
+    if (card.correct == true){
+        rightAnswers++
+    }
+
+
 }
 function closeModal() {
     myModal.hide()
