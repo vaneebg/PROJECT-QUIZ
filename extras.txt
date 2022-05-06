@@ -6,13 +6,18 @@ https://codepen.io/quadbaup/full/ZEQqzqM
 
 
 
-Corregir: 
-
-revisar linea 79 para abrir modal
-
 
 
 Retos a comentar en el Readme: 
 
 Se supone que al seleccionar una opcion, nos muestta la correcta con opacidad 100 y las demás les baja la opacidad para que queden en segundo plano
 
+
+
+Cosas pendientes: 
+
+1- Introducir usuario
+
+2- Remarcar qué respuesta es correcta con un dataset correct
+
+3- Revisar preguntas si hay que hacer algo para reescribir 

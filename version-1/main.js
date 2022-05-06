@@ -9,7 +9,7 @@ const questionTitle = document.getElementById("question")
 const answerOptions = document.getElementById("answerOptions")
 
 let currentQuestionIndex;
-let rightAnswers = 0
+let rightAnswers;
 
 // const questionsList = [{
 //         question: "Pregunta 1",
@@ -40,6 +40,8 @@ let rightAnswers = 0
 //     }
 // ];
 
+// declarar las demás cards más tarde
+const getA = document.getElementById('cardA')
 
 
 
@@ -49,106 +51,127 @@ function hideView() {
     results.classList.add('d-none')
 }
 
- function openModal() {
+function openModal() {
+
+
     myModal.show();
- }
+    
+    if (card.correct == true){
+        rightAnswers++
+    }
+
+
+}
 
 function closeModal() {
     myModal.hide()
 }
 
 
-// // getA.addEventListener("click", openModal)
+// getA.addEventListener("click", openModal)
 
- const setStatusClass = (cardElement, cardValue) => {
+const setStatusClass = (element, correct) => {
 
-    if (cardValue) {
-        cardElement.children[0].className = "card bg-success"
+    if (correct) {
+        element.children[0].className = "card bg-success"
             // element.children[0].classList.add("border-5")
     } else {
-        cardElement.children[0].className = "card bg-danger"
+        element.children[0].className = "card bg-danger"
     }
- }
-
-// pendiente
-// if (card.correct == true) {
-//     rightAnswers++
-//   }
+}
 
 
- const selectAnswer = () => {
 
-   Array.from(answerOptions.children).forEach(card => {
-      setStatusClass(card, card.dataset.correct);
-  });
 
-     openModal()
+const selectAnswer = () => {
+
+    Array.from(answerOptions.children).forEach(card => {
+        setStatusClass(card, card.dataset.correct);
+    });
+
+    openModal()
     if (arrayQuestions.length > currentQuestionIndex + 1) {
 
-     } else {
+    } else {
 
         buttonNext.innerText = "Check results"
         buttonNext.addEventListener("click", () => {
             hideView()
             results.classList.remove('d-none')
         })
+    }
+
 }
 
 
-}
+const showQuestion = (arrayQuestions) => {
+    console.log(arrayQuestions[1])
+    questionTitle.innerHTML = arrayQuestions[0]
+    arrayQuestions[1].forEach(answer => {
+        const card = document.createElement("card");
+        // console.log("he creado tarjetas")
+        card.innerHTML = ` 
+                
+                <div class="card" id="card" >
+                    <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${answer.text}</h5>
+                    </div>
+                </div>
+            
+`
+            // revisar aquí nombre
+            // card.classList.add("card");
+            // card.classList.add("cardAnswer");
+        if (answer.correct) {
+            card.dataset.correct = true;
+        }
+
+        // añadir un eventlistener para comprobar esto
+        if (card.correct == true) {
+            rightAnswers++
+        }
 
 
-const showQuestion = (currentQuestion) => {
-   console.log("pregunta",currentQuestion)
-    questionTitle.innerHTML =` ${currentQuestion[0]} ?`
-    console.log("respuestas",currentQuestion[1])
-    currentQuestion[1].forEach(answer => { 
-   
-         const card = document.createElement("card");        
-         card.innerHTML = ` 
-                            <div class="card" id="card" >
-                                <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">${answer}</h5>
-                                </div>
-                            </div>            
-                            `         
         card.addEventListener("click", selectAnswer);
         answerOptions.appendChild(card);
 
     })
 
-// añade el atributo correcto a la primera card (que sabemos es correcta)
-    answerOptions.firstElementChild.dataset.correct = true;
+}
 
-  
 
-// const resetState = () => {
-//     closeModal()
-//     while (answerOptions.firstChild) {
-//         answerOptions.removeChild(answerOptions.firstChild)
-//     }
-// }
+const resetState = () => {
+    closeModal()
+    while (answerOptions.firstChild) {
+        answerOptions.removeChild(answerOptions.firstChild)
+    }
+}
+
+const nextQuestion = () => {
+    resetState();
+    showQuestion(arrayQuestions[currentQuestionIndex]);
 
 }
 
-const nextQuestion = (data) => {
-    // resetState();
-    showQuestion(data[currentQuestionIndex])
-
- }
-
-
+const startQuiz = () => {
+    hideView()
+    quiz.classList.remove('d-none')
+    currentQuestionIndex = 0;
+    nextQuestion()
+}
+buttonStart.addEventListener('click', startQuiz)
+buttonNext.addEventListener("click", () => {
+    currentQuestionIndex++;
+    nextQuestion();
+})
 
 
 // COGER DATOS DE LA API
 const questionsAPI = async() => {
-
         const arrayAPI = await axios.get("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple")
             // console.log(arrayAPI.data.results)
         let arrayQuestions = []
-
-        // depuramos las preguntas.
         arrayAPI.data.results.forEach(element => {
 
             const { correct_answer: correctAnswer, question, incorrect_answers: incorrectAnswersArray } = element
@@ -166,20 +189,10 @@ const questionsAPI = async() => {
     }
     // const arrayQuestions = []
 questionsAPI().then(data => {
-    // console.log(data)
+    console.log(data)
         // aqui metemos funciones que necesiten esos datos
-         buttonStart.addEventListener('click',(e) => {
-            e.preventDefault();
-            // console.log(dataParameter)
-            hideView()
-            quiz.classList.remove('d-none')
-            currentQuestionIndex = 0;
-            // console.log(dataParameter[currentQuestionIndex])
-            nextQuestion(data)
-         })
+        // 
 })
-
-
 
 
 

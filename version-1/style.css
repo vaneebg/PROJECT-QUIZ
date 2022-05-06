@@ -1,0 +1,38 @@
+h1 {
+    color: brown;
+}
+
+#body {
+    height: 100vh;
+    cursor: url(/Assets/cursorluffy.png), pointer;
+}
+
+
+/* MIRAR AL FINAL QUÉ SELECCIONAMOS CUANDO LE DAMOS A LA CARD PARA ASÍ HACERLE UN HOVER */
+
+#buttonStart:hover,
+#buttonNext:hover {
+    cursor: url(/Assets/170512.png), pointer;
+}
+
+#buttonNext {
+    color: red;
+    background-color: white;
+    border-color: green;
+    font-weight: 800;
+}
+
+.animated-gradient-background {
+    animation: animateBg 30s linear infinite;
+    background-image: linear-gradient( 0deg, #246655, #462466, #b66d52, #a65773, #bbd2a9, #7ad5ca, #bf8145, #de863e, #aeba21, #246655, #462466);
+    background-size: 100% 1000%;
+}
+
+@keyframes animateBg {
+    0% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
