@@ -21,3 +21,5 @@ Cosas pendientes:
 2- Remarcar qué respuesta es correcta con un dataset correct
 
 3- Revisar preguntas si hay que hacer algo para reescribir 
+
+4- Revisar qué componenetes finales tiene cada parte para modificarlo en el readme. ver si al final tenemos más retos. En la parte de js, mejor foto con colores, o copia de codigo?
