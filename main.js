@@ -1,4 +1,3 @@
-// alert("one piece mola")
 const home = document.getElementById("home");
 const quiz = document.getElementById("quiz");
 const results = document.getElementById("results");
@@ -29,8 +28,6 @@ function closeModal() {
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
-
-
         // element.children[0].classList.add("border-5")
     } else {
         cardElement.children[0].className = "card bg-danger";
@@ -39,12 +36,10 @@ const setStatusClass = (cardElement, cardValue) => {
 };
 
 // pendiente
-// if (card.correct == true) {
-//     rightAnswers++
-//   }
+
 
 const showQuestion = (currentQuestion) => {
-    console.log("holi", rightAnswers)
+    console.log("contador respuestas acertadas", rightAnswers)
     questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
     currentQuestion[2].forEach((answer) => {
@@ -59,22 +54,21 @@ const showQuestion = (currentQuestion) => {
                       `;
 
         card.addEventListener("click", function selectAnswer() {
-
             Array.from(answerOptions.children).forEach((card) => {
                 setStatusClass(card, card.dataset.correct);
             });
             modalResponse.innerHTML = `${currentQuestion[1]}`
             openModal();
+            if (answer === currentQuestion[1]) {
+                rightAnswers++
+            }
         });
         answerOptions.appendChild(card);
     });
 
-    // añade el atributo correcto a la primera card (que sabemos es correcta)
-    console.log(answerOptions)
     Array.from(answerOptions.children).forEach(card => {
         if (card.innerText == currentQuestion[1])
             card.dataset.correct = true;
-
     })
 
 
@@ -91,12 +85,11 @@ const nextQuestion = (data) => {
 
 };
 
-// COGER DATOS DE LA API
 const questionsAPI = async() => {
     const arrayAPI = await axios.get(
         "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
     );
-    // console.log(arrayAPI.data.results)
+
     let arrayQuestions = [];
 
     // depuramos las preguntas.
@@ -119,11 +112,10 @@ const questionsAPI = async() => {
 };
 
 questionsAPI().then((data) => {
-    console.log("listado preguntas", data)
 
-    // aqui metemos funciones que necesiten esos datos
     buttonStart.addEventListener("click", (e) => {
         e.preventDefault();
+        rightAnswers = 0;
         hideView();
         quiz.classList.remove("d-none");
         currentQuestionIndex = 0;
@@ -135,6 +127,7 @@ questionsAPI().then((data) => {
             currentQuestionIndex++;
             nextQuestion(data)
         } else {
+
             closeModal();
             hideView();
             results.classList.remove("d-none")
@@ -143,12 +136,3 @@ questionsAPI().then((data) => {
     })
 
 });
-// Cuando llamas a una función el parámetro tiene que ser algo tangible, por ej. un dato o un numero. Sin embargo, cuando se invoca el parametro es un nombre inventado cualquiera.(jaja)
-// showQuestion(arrayQuestions)
-
-// console.log(arrayQuestions);
-
-// DESESTRUCTURAMOS LA ARRAY
-
-// const [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10] = arrayAPI
-// console.log(question2)
