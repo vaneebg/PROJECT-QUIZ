@@ -10,8 +10,10 @@ const myModal = new bootstrap.Modal(
 );
 const questionTitle = document.getElementById("question");
 const answerOptions = document.getElementById("answerOptions");
+const cardAnswer = document.getElementById("cardAnswer")
 let currentQuestionIndex;
 let rightAnswers = 0;
+
 
 function hideView() {
   home.classList.add("d-none");
@@ -19,13 +21,35 @@ function hideView() {
   results.classList.add("d-none");
 }
 
-function openModal() {
-  myModal.show();
+function openModal(answer) {
+    myModal.show();  
+    cardAnswer.innerText = `${answer[1][0]}`
 } 
 
 function closeModal() {
   myModal.hide();
 } 
+
+
+// funcion para desordenar el array
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+
 const setStatusClass = (cardElement, cardValue) => {
   if (cardValue) {
     cardElement.children[0].className = "card bg-success";
@@ -41,11 +65,17 @@ const setStatusClass = (cardElement, cardValue) => {
 //   }
 
 const showQuestion = (currentQuestion) => { 
-console.log(currentQuestionIndex)
   questionTitle.innerHTML = ` ${currentQuestion[0]} ?`;
+// console.log("respuestas originales", currentQuestion[1])
+//   answerOptions.firstElementChild.dataset.correct = true;
+//   const randomQuestion = shuffle(currentQuestion[1])
+//   console.log("respuestas aleatorias", randomQuestion)
+
  
-  currentQuestion[1].forEach((answer) => {
-    const card = document.createElement("card");
+currentQuestion[1].forEach((answer) => {
+const card = document.createElement("card");
+   
+
     card.innerHTML = ` 
                             <div class="card" id="card" >
                                 <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
@@ -59,7 +89,7 @@ console.log(currentQuestionIndex)
         Array.from(answerOptions.children).forEach((card) => {
           setStatusClass(card, card.dataset.correct);
         });
-         openModal();
+         openModal(currentQuestion);
       }
     );
     answerOptions.appendChild(card);
@@ -67,6 +97,21 @@ console.log(currentQuestionIndex)
 
   // añade el atributo correcto a la primera card (que sabemos es correcta)
   answerOptions.firstElementChild.dataset.correct = true;
+
+// //   ¿es muy loco hacer aqui otro bucle para pegar las aleatorias?
+// // esto no termina de funcionar porque no las hace bien
+// const randomQuestion = shuffle(currentQuestion[1])
+// currentQuestion[1].forEach((answer) => {
+//     console.log(answer)
+//     card.innerHTML = ` 
+//     <div class="card" id="card" >
+//         <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+//         <div class="card-body text-center">
+//             <h5 class="card-title">${randomQuestion}</h5>
+//         </div>
+//     </div>            
+// `;
+// })
 };
 const resetState = () => {
   closeModal();
@@ -95,18 +140,27 @@ const questionsAPI = async () => {
       question,
       incorrect_answers: incorrectAnswersArray,
     } = element;
-    const answers = [correctAnswer, ...incorrectAnswersArray];   
+    const answers = [correctAnswer, ...incorrectAnswersArray];  
+    // console.log("respuestas",answers) 
+    // console.log("respuesta correcta", answers[0])
+    // answers[0].dataset.correct = true
+
     const questionClear = question
       .replaceAll(/&quot;/gi, "")
       .replaceAll(/&#039;/gi, "");
     const arrayQuestions1 = [questionClear, answers];
     arrayQuestions.push(arrayQuestions1);
   });
+
+  console.log(arrayQuestions)
   return arrayQuestions;
 };
 // const arrayQuestions = []
 questionsAPI().then((data) => {
-  console.log("listado preguntas",data)
+//   console.log("listado preguntas",data)
+//   console.log("pregunta aleatoria:", data[0][0])
+//   console.log("total de respuestas de la pregunta aleatoria:", data[0][1])
+//   console.log("respuesta correcta de la pregunta aleatoria:", data[0][1][1])
   
   // aqui metemos funciones que necesiten esos datos
   buttonStart.addEventListener("click", (e) => {
