@@ -5,7 +5,7 @@
 
 * Sobre el proyecto
     * Objetivos
-     * Instalación y despliegue
+    * Instalación y despliegue
     * Tecnologías usadas
     
 
@@ -91,19 +91,19 @@ FOTO
 Como se puede observar, hemos cogido las partes del DOM que vamos a necesitar, tanto las diferentes secciones como los botones que harán diferentes tareas, además del modal en sí, y la declaración de dos últimas variables que usaremos en las funciones.
 
 
-El resto de apartados del archivo JS los iremos explicando según va a funcionar el quiz. Por ello, la primera función es la siguiente:
+El resto de apartados del archivo JS los iremos explicando según van desarrollándose. Por ello, la primera función es la siguiente:
 FOTO
 
 
 Esta función es asíncrona ya que necesitamos que los datos de la API estén cogidos desde el inicio. Declaramos una variable que denominamos arrayAPI y mediante la libería de Javascript de Axios, cogemos la URL que nos proporciona la misma API y que hará referencia a las 10 cuestiones con sus respuestas.
 Después declaramos un array vacío sobre el que haremos push más adelante. 
 
-Lo que hacemos ahora es coger los datos que nos interesan, es decir, data.results, y hacer un bucle que para cada elemento haga las siguientes tareas:
+Lo que hacemos ahora es coger los datos que nos interesan, es decir, data.results, y hacer un bucle que, para cada elemento, haga las siguientes tareas:
 * Primero desestructurar nuestro objeto, trayendo los 3 datos que nos interesan: questions, correct_answer y incorrect_answers (las dos últimas las hemos renombrado).
 * Después unir la respuesta correcta con el array que lleva las otras 3 respuestas erróneas.
 * Como tercer paso, hemos depurado la question inicial, ya que traía algunos símbolos que no permitían la lectura correcta de la pregunta.
 * Por último, hemos creado la variable arrayQuestions1 donde hemos puesto la pregunta ya limpia, y las respuestas previamente unidas. Y con esto, hemos hecho push para rellenar esa array vacía que habíamos declarado anteriormente.
-Como resultado, lo que nos debe devolver esta función asíncrona es esa array con nuestros 3 datos listos para usarlos.
+Como resultado, lo que nos debe devolver esta función asíncrona es la array con nuestros 3 datos listos para usarlos (arrayQuestions).
 
 
 La siguiente función es la consumición de la promesa de nuestra función questionsAPI, recogiendo el parámetro data, que no es más que nuestra arrayQestions.
@@ -112,8 +112,7 @@ FOTO
 
 Aquí hemos añadido los dos addEventListeners que tenemos y que irán recogiendo las funciones anidadas.
 Por un lado, el de buttonStart, que activa una función anónima que se encarga de lo siguiente:
-* Primero, preventDefault para cancelar los eventos que vienen predeterminados con la página.
-    
+* Primero, preventDefault para cancelar los eventos que vienen predeterminados con la página.   
 * Inicializa nuestra variable del index en 0.
 * Llama a dos funciones, hideView que oculta las secciones:
     FOTO
@@ -121,26 +120,24 @@ Por un lado, el de buttonStart, que activa una función anónima que se encarga 
 y nextQuestion:
     FOTO
 
-que se encarga de llamar a la función showQuestion (cuyo parámetro sigue siendo data, añadiéndole nuestro index), y a resetState, cuya función es:
+Esta última función se encarga de llamar a la función showQuestion (cuyo parámetro sigue siendo data, añadiéndole nuestro index), y a resetState, cuya función es:
+FOTO
 * Eliminar la clase de la sección quiz para que esté visible.
+* Mientras haya respuestas escritas, se tienen que ir borrando.
 
-Una vez pulsado el botón start, nextQuestion se activa, llamando a:
-* ShowQuestion: 
+
+ En lo referente a showQuestion, se encarga de:
     FOTO
-Esta función se encarga, primero de pintar la pregunta en el espacio que le hemos dado en el html (questionTitle), y segundo, empieza un bucle, donde para cada answer, nos va a pintar una card, teniendo al final un total de 4 cards (4 posibles respuestas).
+* Primero pintar la pregunta en el espacio que le hemos dado en el html (questionTitle)
+* Segundo, empieza un bucle, donde para cada answer, nos va a pintar una card, teniendo al final un total de 4 cards (4 posibles respuestas).
     - Estas mismas cards, tienen un addEventListener que se activará cuando el usuario elija una de ellas, independientemente de cuál sea, y llamará a la función selectAnswer, que se encargará de:
-        * Crear una array con las 4 respuestas y un bucle que las recorra, donde para cada respuesta(cada card),  se creará el atributo correct.
+        * Crear una array con las 4 respuestas y un bucle que las recorra, donde para cada respuesta(cada card), se creará el atributo correct.
         * Activará la función de abrir modal.
-        * 
-    Por último, como sabemos que la primera respuesta equivale a la correctAnswer, le decimos que su atributo correct va a ser verdadero (=true).
+        * Le decimos además que card estará como hijo de la sección answerOptions.
+        * Por último, como sabemos que la primera respuesta equivale a la correctAnswer, le decimos que su atributo correct va a ser verdadero (=true).
 
 
-* ResetState:
-    FOTO
-    Esta función se encargará de cerrar el modal y mientras.... FALTA
-
-
-Para finalizar, tenemos el siguiente addEventListener puesto junto al segundo para evitar problemas de asíncronía. En este evento del botón Next, se activa una función que, si aún quedasen preguntas, es decir, la longitud de nuestra arrayQuestions (data) siga siendo mayor que nuestro index, entonces sumará uno a ese mismo index y llamará a la función que hemos explicado antes, nextQuestion.
+Para finalizar, tenemos el siguiente addEventListener puesto junto al segundo para evitar problemas de asíncronía. En este evento del botón Next, se activa una función que, si aún quedasen preguntas, es decir, si la longitud de nuestra arrayQuestions (data) siga siendo mayor que nuestro index, entonces sumará uno a ese mismo index y llamará a la función que hemos explicado antes, nextQuestion.
 FOTO
 
 Sin embargo, si ya no quedasen más preguntas, lo que hará será llamar a la función closeModal, que cerrará nuestro modal:

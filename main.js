@@ -32,6 +32,7 @@ const setStatusClass = (cardElement, cardValue) => {
     } else {
         cardElement.children[0].className = "card bg-danger";
     }
+
 };
 
 // pendiente
@@ -41,7 +42,7 @@ const setStatusClass = (cardElement, cardValue) => {
 
 const showQuestion = (currentQuestion) => {
     console.log(currentQuestionIndex)
-    questionTitle.innerHTML = ` ${currentQuestion[0]} ?`;
+    questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
     currentQuestion[1].forEach((answer) => {
         const card = document.createElement("card");
@@ -65,6 +66,7 @@ const showQuestion = (currentQuestion) => {
 
     // añade el atributo correcto a la primera card (que sabemos es correcta)
     answerOptions.firstElementChild.dataset.correct = true;
+
 };
 const resetState = () => {
     closeModal();
