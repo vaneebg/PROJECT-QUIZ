@@ -9,6 +9,7 @@ const myModal = new bootstrap.Modal(
 );
 const questionTitle = document.getElementById("question");
 const answerOptions = document.getElementById("answerOptions");
+const modalResponse = document.getElementById("modalResponse")
 let currentQuestionIndex;
 let rightAnswers = 0;
 
@@ -28,6 +29,8 @@ function closeModal() {
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
+
+
         // element.children[0].classList.add("border-5")
     } else {
         cardElement.children[0].className = "card bg-danger";
@@ -41,10 +44,10 @@ const setStatusClass = (cardElement, cardValue) => {
 //   }
 
 const showQuestion = (currentQuestion) => {
-    console.log(currentQuestionIndex)
+    console.log("holi", rightAnswers)
     questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
-    currentQuestion[1].forEach((answer) => {
+    currentQuestion[2].forEach((answer) => {
         const card = document.createElement("card");
         card.innerHTML = ` 
                             <div class="card" id="card" >
@@ -56,16 +59,24 @@ const showQuestion = (currentQuestion) => {
                       `;
 
         card.addEventListener("click", function selectAnswer() {
+
             Array.from(answerOptions.children).forEach((card) => {
                 setStatusClass(card, card.dataset.correct);
             });
+            modalResponse.innerHTML = `${currentQuestion[1]}`
             openModal();
         });
         answerOptions.appendChild(card);
     });
 
     // añade el atributo correcto a la primera card (que sabemos es correcta)
-    answerOptions.firstElementChild.dataset.correct = true;
+    console.log(answerOptions)
+    Array.from(answerOptions.children).forEach(card => {
+        if (card.innerText == currentQuestion[1])
+            card.dataset.correct = true;
+
+    })
+
 
 };
 const resetState = () => {
@@ -96,10 +107,12 @@ const questionsAPI = async() => {
             incorrect_answers: incorrectAnswersArray,
         } = element;
         const answers = [correctAnswer, ...incorrectAnswersArray];
+        const randomAnswers = answers.sort();
         const questionClear = question
             .replaceAll(/&quot;/gi, "")
             .replaceAll(/&#039;/gi, "");
-        const arrayQuestions1 = [questionClear, answers];
+        const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
+
         arrayQuestions.push(arrayQuestions1);
     });
     return arrayQuestions;

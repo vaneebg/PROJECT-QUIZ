@@ -131,7 +131,13 @@ FOTO
 * Primero pintar la pregunta en el espacio que le hemos dado en el html (questionTitle)
 * Segundo, empieza un bucle, donde para cada answer, nos va a pintar una card, teniendo al final un total de 4 cards (4 posibles respuestas).
     - Estas mismas cards, tienen un addEventListener que se activará cuando el usuario elija una de ellas, independientemente de cuál sea, y llamará a la función selectAnswer, que se encargará de:
-        * Crear una array con las 4 respuestas y un bucle que las recorra, donde para cada respuesta(cada card), se creará el atributo correct.
+        * Crear una array con las 4 respuestas y un bucle que las recorra, donde se llama a la función setSatatusClass, cogiendo de parámetro la propia card, y añadiéndoles el atributo correct.
+        FOTO
+        Esta función evaluará si el atributo está, y si es el caso, pintará la respuesta de
+        FALTA ESTO
+
+
+        
         * Activará la función de abrir modal.
         * Le decimos además que card estará como hijo de la sección answerOptions.
         * Por último, como sabemos que la primera respuesta equivale a la correctAnswer, le decimos que su atributo correct va a ser verdadero (=true).
@@ -194,6 +200,10 @@ Al trabajar en equipo, tenemos que lidiar con diversas dificultades, como por ej
 - [Fran](https://github.com/franpd8)
 
 - [Vanesa Beltrán](https://github.com/vaneebg)
+
+
+## Agradecimientos
+-[Germán](https://github.com/GeerDev)
 
 
 
