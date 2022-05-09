@@ -3,33 +3,30 @@ const quiz = document.getElementById("quiz");
 const results = document.getElementById("results");
 const buttonNext = document.getElementById("buttonNext");
 const buttonStart = document.getElementById("buttonStart");
-const buttonReStart = document.getElementById("buttonReStart")
+const buttonReStart = document.getElementById("buttonReStart");
 const myModal = new bootstrap.Modal(
     document.getElementById("staticBackdrop"), {}
 );
 const questionTitle = document.getElementById("question");
 const answerOptions = document.getElementById("answerOptions");
-const modalResponse = document.getElementById("modalResponse")
-const scoreResults = document.getElementById("scoreResults")
-const user = document.getElementById("user")
-const alert = document.getElementById("alert")
-const progressBar = document.getElementById("progressBar")
+const modalResponse = document.getElementById("modalResponse");
+const scoreResults = document.getElementById("scoreResults");
+const user = document.getElementById("user");
+const alert = document.getElementById("alert");
+const progressBar = document.getElementById("progressBar");
 
-
-
-
-
-
-let images = ["./Assets/a1.jpg", "./Assets/a2.jpg", "./Assets/a3.jpg", "./Assets/a4.jpg", ]
+let images = [
+    "./Assets/option1.png",
+    "./Assets/option2.png",
+    "./Assets/option3.png",
+    "./Assets/option4.png",
+];
 let currentQuestionIndex;
-
-
 
 // let barra = progreso.toString
 
 let rightAnswers = 0;
-let users = JSON.parse(localStorage.getItem('USERS')) || []
-
+let users = JSON.parse(localStorage.getItem("USERS")) || [];
 
 function hideView() {
     home.classList.add("d-none");
@@ -46,36 +43,33 @@ function closeModal() {
 }
 
 function saveData() {
-
     const data = {
         userName: user.value,
-        userScore: rightAnswers
-    }
-    users.push(data)
+        userScore: rightAnswers,
+    };
+    users.push(data);
 
-    localStorage.setItem('USERS', JSON.stringify(users))
-
-
+    localStorage.setItem("USERS", JSON.stringify(users));
 }
 
 function printData(userName, userScore) {
-    let usersBack = JSON.parse(localStorage.getItem('USERS'))
+    let usersBack = JSON.parse(localStorage.getItem("USERS"));
 
     // Ordena puntuaciones de mayor a menor
     usersBack.sort((a, b) => b.userScore - a.userScore);
 
-    scoreResults.innerHTML = ` Hey, ${userName} you have scored ${userScore}/10 correct answers!
+    scoreResults.innerHTML = ` Hey, ${userName} you have scored <b>${userScore}/10 </b> answers!
+  <br>
     <br>
     Check the score of other players below o(^▽^)o
     <br>
     <br>
     <br>
-    `
-    usersBack.forEach(user => {
-        console.log(user)
-
+    <div class="card-body text-center"><b>Top results</b></div>
+    `;
+    usersBack.forEach((user) => {
         scoreResults.innerHTML += `
-                        <div class="card" style="width: 30rem;">
+                        <div class="card">
                         <div class="card-header text-center">
                         ${user.userName}
                         </div>
@@ -83,13 +77,11 @@ function printData(userName, userScore) {
                         ${user.userScore}
                         </li>
                         </div>   
-
-                            `
-
-    })
-
+                            `;
+    });
 }
 
+printData();
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
@@ -97,15 +89,12 @@ const setStatusClass = (cardElement, cardValue) => {
     } else {
         cardElement.children[0].className = "card bg-danger";
     }
-
 };
 
-
-
 const showQuestion = (currentQuestion) => {
-    let progreso = `${currentQuestionIndex*10}%`
-    console.log(progreso)
-    progressBar.style.width = progreso
+    let progreso = `${currentQuestionIndex * 10}%`;
+    console.log(progreso);
+    progressBar.style.width = progreso;
     questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
     currentQuestion[2].forEach((answer, i) => {
@@ -118,26 +107,22 @@ const showQuestion = (currentQuestion) => {
                                 </div>
                             </div>            
                       `;
-
         card.addEventListener("click", function selectAnswer() {
             Array.from(answerOptions.children).forEach((card) => {
                 setStatusClass(card, card.dataset.correct);
             });
-            modalResponse.innerHTML = `${currentQuestion[1]}`
+            modalResponse.innerHTML = `${currentQuestion[1]}`;
             openModal();
             if (answer === currentQuestion[1]) {
-                rightAnswers++
+                rightAnswers++;
             }
         });
         answerOptions.appendChild(card);
     });
 
-    Array.from(answerOptions.children).forEach(card => {
-        if (card.innerText == currentQuestion[1])
-            card.dataset.correct = true;
-    })
-
-
+    Array.from(answerOptions.children).forEach((card) => {
+        if (card.innerText == currentQuestion[1]) card.dataset.correct = true;
+    });
 };
 const resetState = () => {
     closeModal();
@@ -148,7 +133,6 @@ const resetState = () => {
 const nextQuestion = (data) => {
     resetState();
     showQuestion(data[currentQuestionIndex]);
-
 };
 
 const questionsAPI = async() => {
@@ -156,7 +140,9 @@ const questionsAPI = async() => {
         const arrayAPI = await axios.get(
             "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
         );
+
         let arrayQuestions = [];
+
         arrayAPI.data.results.forEach((element) => {
             const {
                 correct_answer: correctAnswer,
@@ -169,48 +155,49 @@ const questionsAPI = async() => {
                 .replaceAll(/&quot;/gi, "")
                 .replaceAll(/&#039;/gi, "");
             const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
+
             arrayQuestions.push(arrayQuestions1);
         });
         buttonStart.addEventListener("click", (e) => {
             e.preventDefault();
             if (user.value == "") {
-                alert.className = "alert alert-danger text-center"
-                alert.innerText = "Please, introduce an username ಠ益ಠ)!"
+                alert.className = "alert alert-danger text-center";
+                alert.innerText = "Please, introduce an username ಠ益ಠ)!";
             } else {
                 rightAnswers = 0;
                 hideView();
                 quiz.classList.remove("d-none");
                 currentQuestionIndex = 0;
+
                 nextQuestion(arrayQuestions);
             }
             setTimeout(() => {
-                alert.className = "d-none"
-            }, 4000)
+                alert.className = "d-none";
+            }, 4000);
         });
 
         buttonNext.addEventListener("click", () => {
             if (arrayQuestions.length > currentQuestionIndex + 1) {
                 currentQuestionIndex++;
-                nextQuestion(arrayQuestions)
-                console.log(currentQuestionIndex)
+                nextQuestion(arrayQuestions);
+                console.log(currentQuestionIndex);
                 if (currentQuestionIndex == 9) {
-                    buttonNext.innerHTML = "Check Results"
+                    buttonNext.innerHTML = "Check your results ⊂((・▽・))⊃";
                 }
             } else {
-                saveData()
+                saveData();
                 closeModal();
                 hideView();
-                results.classList.remove("d-none")
-                printData(user.value, rightAnswers)
+                printData(user.value, rightAnswers);
+                results.classList.remove("d-none");
                 buttonReStart.addEventListener("click", (e) => {
                     hideView();
                     home.classList.remove("d-none");
-
-                })
+                });
             }
-        })
+        });
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 };
-questionsAPI()
+questionsAPI();

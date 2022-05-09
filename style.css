@@ -5,7 +5,7 @@
 }
 
 #body {
-    height: 100vh;
+   
     cursor: url(/Assets/cursorluffy.png), pointer;
 }
 
@@ -17,7 +17,8 @@
     cursor: url(/Assets/170512.png), pointer;
 }
 
-#buttonStart{
+#buttonStart,
+#buttonReStart{
     color: white;
     background-color: #d21515;
     border-color: #d25151;
