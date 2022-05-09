@@ -87,53 +87,53 @@ const nextQuestion = (data) => {
 };
 
 const questionsAPI = async() => {
-    const arrayAPI = await axios.get(
-        "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
-    );
+    try {
+        const arrayAPI = await axios.get(
+            "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
+        );
 
-    let arrayQuestions = [];
+        let arrayQuestions = [];
 
-    // depuramos las preguntas.
-    arrayAPI.data.results.forEach((element) => {
-        const {
-            correct_answer: correctAnswer,
-            question,
-            incorrect_answers: incorrectAnswersArray,
-        } = element;
-        const answers = [correctAnswer, ...incorrectAnswersArray];
-        const randomAnswers = answers.sort();
-        const questionClear = question
-            .replaceAll(/&quot;/gi, "")
-            .replaceAll(/&#039;/gi, "");
-        const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
+        arrayAPI.data.results.forEach((element) => {
+            const {
+                correct_answer: correctAnswer,
+                question,
+                incorrect_answers: incorrectAnswersArray,
+            } = element;
+            const answers = [correctAnswer, ...incorrectAnswersArray];
+            const randomAnswers = answers.sort();
+            const questionClear = question
+                .replaceAll(/&quot;/gi, "")
+                .replaceAll(/&#039;/gi, "");
+            const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
 
-        arrayQuestions.push(arrayQuestions1);
-    });
-    return arrayQuestions;
-};
-
-questionsAPI().then((data) => {
-
-    buttonStart.addEventListener("click", (e) => {
-        e.preventDefault();
-        rightAnswers = 0;
-        hideView();
-        quiz.classList.remove("d-none");
-        currentQuestionIndex = 0;
-        nextQuestion(data);
-    });
-
-    buttonNext.addEventListener("click", () => {
-        if (data.length > currentQuestionIndex + 1) {
-            currentQuestionIndex++;
-            nextQuestion(data)
-        } else {
-
-            closeModal();
+            arrayQuestions.push(arrayQuestions1);
+        });
+        buttonStart.addEventListener("click", (e) => {
+            e.preventDefault();
+            rightAnswers = 0;
             hideView();
-            results.classList.remove("d-none")
-        }
+            quiz.classList.remove("d-none");
+            currentQuestionIndex = 0;
+            nextQuestion(arrayQuestions);
+        });
 
-    })
+        buttonNext.addEventListener("click", () => {
+            if (arrayQuestions.length > currentQuestionIndex + 1) {
+                currentQuestionIndex++;
+                nextQuestion(arrayQuestions)
+            } else {
 
-});
+                closeModal();
+                hideView();
+                results.classList.remove("d-none")
+            }
+
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+
+};
+questionsAPI()
