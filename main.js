@@ -12,6 +12,9 @@ const answerOptions = document.getElementById("answerOptions");
 const modalResponse = document.getElementById("modalResponse")
 const scoreResults = document.getElementById("scoreResults")
 const user = document.getElementById("user")
+
+let images = ["./Assets/a1.jpg","./Assets/a2.jpg","./Assets/a3.jpg","./Assets/a4.jpg",]
+console.log(images)
 let currentQuestionIndex;
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem('USERS')) || []
@@ -58,11 +61,11 @@ const showQuestion = (currentQuestion) => {
     console.log("contador respuestas acertadas", rightAnswers)
     questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
-    currentQuestion[2].forEach((answer) => {
+    currentQuestion[2].forEach((answer, i) => {
         const card = document.createElement("card");
         card.innerHTML = ` 
                             <div class="card" id="card" >
-                                <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+                                <img src="${images[i]}" class="card-img-top" alt="..." />
                                 <div class="card-body text-center">
                                     <h5 class="card-title">${answer}</h5>
                                 </div>
