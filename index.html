@@ -12,30 +12,32 @@
 </head>
 
 <body id="body" class="animated-gradient-background">
-    <section id="home" class="d-none">
+    <section id="home">
         <h1 class="py-4 text-center"></h1>
         <div class="card mx-auto " style="width: 50rem;">
             <img src="/Assets/1.jpg" class="card-img-top" alt="...">
             <div class="card-body mx-auto" style="width:30rem">
                 <h5 id="h5" class="card-title pt-4">Anime Quiz: Are you a real Otaku?</h5>
-                <p class="card-text">How much do you know about Anime & Manga?</p>
-
+                <p class="card-text">How much do you know about Anime & Manga? ~ヾ(＾∇＾)</p>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">User:</span>
-                    <input id="user" type="text" class="form-control" placeholder="What user name do you want to have?" autofocus required>
-                </div>
+                    <span class="input-group-text" id="basic-addon1">Username:</span>
+                    <input id="user" type="text" class="form-control" placeholder="Please, introduce your username?" autofocus >
 
+                </div>
+                <div id="alert" class="mx-auto" style="width: 28rem"></div>
                 <div class="text-center py-4"><button type="button" id="buttonStart" class="btn btn-primary text-center">
-                  Sail along!
+                 Take the Quiz
                 </button>
                 </div>
             </div>
         </div>
     </section>
     <section id="quiz" class="d-none">
-        <h1 class="py-4 text-center">Mugiwara Quiz</h1>
         <div id="quiz-container" class="card mx-auto" style="width: 55rem">
-            <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+            <!-- <img src="/Assets/1.jpg" class="card-img-top" alt="..." /> -->
+            <div class="progress">
+                <div id="progressBar" class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
             <div id="questionTitle" class="card-body text-center py-5">
                 <h2 id="question" class="card-title"></h2>
             </div>
@@ -45,23 +47,23 @@
 
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog" style="max-width:400px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">
-                                La respuesta correcta es:
+                                The correct answer is: 
                             </h5>
                         </div>
-                        <div class="modal-body bg-primary">
-                            <div class="card">
-                                <img src="/Assets/1.jpg" class="card-img-top" alt="..." />
+                        <div class="modal-body bg-success">
+                            <div class="card" style="padding: 0 2.5rem">
+                                <img src="/Assets/success.gif" class="card-img-top" alt="..." />
                                 <div class="card-body text-center">
-                                    <h5 id="modalResponse" class="card-title">Respuesta D</h5>
+                                    <h5 id="modalResponse" class="card-title"></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="buttonNext" class="btn btn-primary mx-auto">
+                            <button type="button" id="buttonNext" class="btn btn-success mx-auto">
                   Next question! 
                 </button>
                         </div>
@@ -70,8 +72,7 @@
             </div>
         </div>
     </section>
-    <section id="results" >
-        <h1 class="py-4 text-center">Mugiwara Quiz</h1>
+    <section id="results"  >
         <div class="card mx-auto " style="width: 50rem;">
             <img src="/Assets/1.jpg" class="card-img-top" alt="...">
             <div class="card-body mx-auto" style="width:30rem">
@@ -81,15 +82,15 @@
                 
                     
                 
-  <div class="card" style="width: 30rem;">
+  <!-- <div class="card" style="width: 30rem;">
     <div class="card-header text-center">
      Username
     </div>
       <li style="border:none" class="list-group-item text-center">Puntos</li>
-  </div>
+  </div> -->
 
                 <div class="text-center py-4"><button type="button" id="buttonReStart" class="btn btn-primary text-center">
-                  Sail along!
+                  Take the quiz again!
                 </button>
                 </div>
             </div>

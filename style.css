@@ -1,7 +1,7 @@
 
 #h5{
     font-size:30px;
-    color:rgb(210, 21, 21)
+    color:#d21515;
 }
 
 #body {
@@ -17,12 +17,14 @@
     cursor: url(/Assets/170512.png), pointer;
 }
 
-#buttonNext {
-    color: red;
-    background-color: white;
-    border-color: green;
-    font-weight: 800;
+#buttonStart{
+    color: white;
+    background-color: #d21515;
+    border-color: #d25151;
+    font-weight: 400;
+
 }
+
 
 .animated-gradient-background {
     animation: animateBg 30s linear infinite;

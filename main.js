@@ -12,9 +12,21 @@ const answerOptions = document.getElementById("answerOptions");
 const modalResponse = document.getElementById("modalResponse")
 const scoreResults = document.getElementById("scoreResults")
 const user = document.getElementById("user")
+const alert = document.getElementById("alert")
+const progressBar = document.getElementById("progressBar")
+
+
+
+
+
 
 let images = ["./Assets/a1.jpg","./Assets/a2.jpg","./Assets/a3.jpg","./Assets/a4.jpg",]
 let currentQuestionIndex;
+
+
+
+// let barra = progreso.toString
+
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem('USERS')) || []
 
@@ -42,14 +54,42 @@ function saveData(){
     users.push(data)
 
     localStorage.setItem('USERS', JSON.stringify(users))
-
-}
-function printData(){
-    let usersBack = JSON.parse(localStorage.getItem('USERS'))
     
 
-
 }
+function printData(userName,userScore){
+    let usersBack = JSON.parse(localStorage.getItem('USERS'))
+    
+// Ordena puntuaciones de mayor a menor
+    usersBack.sort((a,b) => b.userScore - a.userScore);
+
+    scoreResults.innerHTML= ` Hey, ${userName} you have scored ${userScore}/10 correct answers!
+    <br>
+    Check the score of other players below o(^▽^)o
+    <br>
+    <br>
+    <br>
+    `
+    usersBack.forEach(user => {
+        console.log(user)
+       
+        scoreResults.innerHTML += `
+                        <div class="card" style="width: 30rem;">
+                        <div class="card-header text-center">
+                        ${user.userName}
+                        </div>
+                        <li style="border:none" class="list-group-item text-center">
+                        ${user.userScore}
+                        </li>
+                        </div>   
+
+                            `
+
+    })
+    
+}
+
+ printData()
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
@@ -63,7 +103,9 @@ const setStatusClass = (cardElement, cardValue) => {
 
 
 const showQuestion = (currentQuestion) => {
-    console.log("contador respuestas acertadas", rightAnswers)
+    let progreso = `${currentQuestionIndex*10}%`
+    console.log(progreso)
+    progressBar.style.width = progreso
     questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
     currentQuestion[2].forEach((answer, i) => {
@@ -134,11 +176,31 @@ const questionsAPI = async() => {
         });
         buttonStart.addEventListener("click", (e) => {
             e.preventDefault();
+            if( user.value == ""){
+               alert.className = "alert alert-danger text-center"
+               alert.innerText = "Please, introduce an username ಠ益ಠ)!"
+
+              
+            }
+
+            else {
             rightAnswers = 0;
             hideView();
             quiz.classList.remove("d-none");
             currentQuestionIndex = 0;
+            
+
+
+
+            
+            
             nextQuestion(arrayQuestions);
+
+            } 
+            setTimeout( () =>{
+                alert.className ="d-none"
+            },4000)
+            
         });
 
         buttonNext.addEventListener("click", () => {
@@ -152,12 +214,36 @@ const questionsAPI = async() => {
             }
             
             else {
-            
+                saveData()
                 closeModal();
                 hideView();
                 results.classList.remove("d-none")
-                scoreResults.innerText= ` Enhorabuena ${user.value}, tu puntuacion es ${rightAnswers}/ 10`
-                saveData()
+                printData(user.value,rightAnswers)
+                // scoreResults.innerText= ` Hey, ${user.value}. You have scored ${rightAnswers}/ 10 correct answers!
+                // `
+
+                
+                
+
+                // scoreResults.innerHTML = `
+                
+                //         <div class="card" style="width: 30rem;">
+                //                 <div class="card-header text-center">
+                //                     Username
+                //                 </div>
+                //                 <li style="border:none" class="list-group-item text-center">
+                //                     Puntos
+                //                 </li>
+                //         </div>
+                
+                
+                
+                
+                //             `
+
+
+
+
 
 
                 buttonReStart.addEventListener("click", (e) => {
