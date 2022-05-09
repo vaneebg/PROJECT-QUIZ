@@ -23,9 +23,6 @@ let images = [
   "./Assets/option4.png",
 ];
 let currentQuestionIndex;
-
-// let barra = progreso.toString
-
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem("USERS")) || [];
 
@@ -34,11 +31,9 @@ function hideView() {
   quiz.classList.add("d-none");
   results.classList.add("d-none");
 }
-
 function openModal() {
   myModal.show();
 }
-
 function closeModal() {
   myModal.hide();
 }
@@ -49,52 +44,45 @@ function saveData() {
     userScore: rightAnswers,
   };
   users.push(data);
-
   localStorage.setItem("USERS", JSON.stringify(users));
 }
 function printData(userName, userScore) {
   let usersBack = JSON.parse(localStorage.getItem("USERS"));
-
   // Ordena puntuaciones de mayor a menor
   usersBack.sort((a, b) => b.userScore - a.userScore);
 
-  scoreResults.innerHTML = ` Hey, ${userName} you have scored <b>${userScore}/10 </b> answers!
-  <br>
-    <br>
-    Check the score of other players below o(^▽^)o
-    <br>
-    <br>
-    <br>
-    <div class="card-body text-center"><b>Top results</b></div>
-    `;
+  scoreResults.innerHTML = 
+  
+                ` Hey, ${userName} you have scored <b>${userScore}/10 </b> answers!
+                <br>
+                <br>
+                    Check the score of other players below o(^▽^)o
+                <br>
+                <br>
+                <br>
+                    <div class="card-body text-center"><b>Top results</b></div>
+                    `;
   usersBack.forEach((user) => {
+
     scoreResults.innerHTML += `
                         <div class="card">
-                        <div class="card-header text-center">
-                        ${user.userName}
-                        </div>
-                        <li style="border:none" class="list-group-item text-center">
-                        ${user.userScore}
-                        </li>
-                        </div>   
-                            `;
+                        <div class="card-header text-center">${user.userName}</div>
+                        <li style="border:none" class="list-group-item text-center">${user.userScore}</li></div>   
+                             `;
   });
 }
 
-printData();
 const setStatusClass = (cardElement, cardValue) => {
   if (cardValue) {
     cardElement.children[0].className = "card bg-success";
-    // element.children[0].classList.add("border-5")
   } else {
     cardElement.children[0].className = "card bg-danger";
   }
 };
 
 const showQuestion = (currentQuestion) => {
-  let progreso = `${currentQuestionIndex * 10}%`;
-  console.log(progreso);
-  progressBar.style.width = progreso;
+  let progress = `${currentQuestionIndex * 10}%`;
+  progressBar.style.width = progress;
   questionTitle.innerHTML = ` ${currentQuestion[0]}?`;
 
   currentQuestion[2].forEach((answer, i) => {
@@ -168,11 +156,10 @@ const questionsAPI = async () => {
         hideView();
         quiz.classList.remove("d-none");
         currentQuestionIndex = 0;
-
         nextQuestion(arrayQuestions);
       }
       setTimeout(() => {
-        alert.className = "d-none";
+        alert.className ="d-none";
       }, 4000);
     });
 
@@ -180,23 +167,25 @@ const questionsAPI = async () => {
       if (arrayQuestions.length > currentQuestionIndex + 1) {
         currentQuestionIndex++;
         nextQuestion(arrayQuestions);
-        console.log(currentQuestionIndex);
         if (currentQuestionIndex == 9) {
           buttonNext.innerHTML = "Check your results ⊂((・▽・))⊃";
         }
       } else {
-        saveData();
         closeModal();
-        hideView();
+        saveData();
         printData(user.value, rightAnswers);
+        hideView();
         results.classList.remove("d-none");
-        buttonReStart.addEventListener("click", (e) => {
-          hideView();
-          home.classList.remove("d-none");
-        });
+        
       }
     });
-  } catch (error) {
+    buttonReStart.addEventListener("click", (e) => {
+        hideView();
+        home.classList.remove("d-none");
+        user.value= ""
+      });
+  } 
+  catch (error) {
     console.error(error);
   }
 };
