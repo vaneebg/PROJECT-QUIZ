@@ -86,8 +86,15 @@ const card = document.createElement("card");
                       `;
 
     card.addEventListener("click", function selectAnswer() {
+        console.log(rightAnswers)
+        console.log("holi")
         Array.from(answerOptions.children).forEach((card) => {
           setStatusClass(card, card.dataset.correct);
+// esto no chuta
+          if(card.dataset.correct == true ){
+            rightAnswers++
+            console.log(rightAnswers)
+                }
         });
          openModal(currentQuestion);
       }
@@ -136,11 +143,21 @@ const questionsAPI = async () => {
   // depuramos las preguntas.
   arrayAPI.data.results.forEach((element) => {
     const {
-      correct_answer: correctAnswer,
+      correct_answer: correctAnswerArray,
       question,
       incorrect_answers: incorrectAnswersArray,
     } = element;
-    const answers = [correctAnswer, ...incorrectAnswersArray];  
+    // console.log(element)
+    // console.log(correctAnswerArray)
+
+
+    // correctAnswer.forEach(answer => {
+    //     answer.dataset.correct = true
+    // })
+   
+    const answers = [correctAnswerArray, ...incorrectAnswersArray];  
+
+    // console.log(correctAnswerArray)
     // console.log("respuestas",answers) 
     // console.log("respuesta correcta", answers[0])
     // answers[0].dataset.correct = true
