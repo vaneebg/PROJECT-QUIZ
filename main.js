@@ -3,12 +3,15 @@ const quiz = document.getElementById("quiz");
 const results = document.getElementById("results");
 const buttonNext = document.getElementById("buttonNext");
 const buttonStart = document.getElementById("buttonStart");
+const buttonReStart = document.getElementById("buttonReStart")
 const myModal = new bootstrap.Modal(
     document.getElementById("staticBackdrop"), {}
 );
 const questionTitle = document.getElementById("question");
 const answerOptions = document.getElementById("answerOptions");
 const modalResponse = document.getElementById("modalResponse")
+const scoreResults = document.getElementById("scoreResults")
+const user = document.getElementById("user")
 let currentQuestionIndex;
 let rightAnswers = 0;
 
@@ -87,53 +90,72 @@ const nextQuestion = (data) => {
 };
 
 const questionsAPI = async() => {
-    const arrayAPI = await axios.get(
-        "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
-    );
+    try {
+        const arrayAPI = await axios.get(
+            "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
+        );
 
-    let arrayQuestions = [];
+        let arrayQuestions = [];
 
-    // depuramos las preguntas.
-    arrayAPI.data.results.forEach((element) => {
-        const {
-            correct_answer: correctAnswer,
-            question,
-            incorrect_answers: incorrectAnswersArray,
-        } = element;
-        const answers = [correctAnswer, ...incorrectAnswersArray];
-        const randomAnswers = answers.sort();
-        const questionClear = question
-            .replaceAll(/&quot;/gi, "")
-            .replaceAll(/&#039;/gi, "");
-        const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
+        arrayAPI.data.results.forEach((element) => {
+            const {
+                correct_answer: correctAnswer,
+                question,
+                incorrect_answers: incorrectAnswersArray,
+            } = element;
+            const answers = [correctAnswer, ...incorrectAnswersArray];
+            const randomAnswers = answers.sort();
+            const questionClear = question
+                .replaceAll(/&quot;/gi, "")
+                .replaceAll(/&#039;/gi, "");
+            const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
 
-        arrayQuestions.push(arrayQuestions1);
-    });
-    return arrayQuestions;
-};
-
-questionsAPI().then((data) => {
-
-    buttonStart.addEventListener("click", (e) => {
-        e.preventDefault();
-        rightAnswers = 0;
-        hideView();
-        quiz.classList.remove("d-none");
-        currentQuestionIndex = 0;
-        nextQuestion(data);
-    });
-
-    buttonNext.addEventListener("click", () => {
-        if (data.length > currentQuestionIndex + 1) {
-            currentQuestionIndex++;
-            nextQuestion(data)
-        } else {
-
-            closeModal();
+            arrayQuestions.push(arrayQuestions1);
+        });
+        buttonStart.addEventListener("click", (e) => {
+            e.preventDefault();
+            rightAnswers = 0;
             hideView();
-            results.classList.remove("d-none")
-        }
+            quiz.classList.remove("d-none");
+            currentQuestionIndex = 0;
+            nextQuestion(arrayQuestions);
+        });
 
-    })
+        buttonNext.addEventListener("click", () => {
+            if (arrayQuestions.length > currentQuestionIndex + 1) {
+                currentQuestionIndex++;
+                nextQuestion(arrayQuestions)
+                console.log(currentQuestionIndex)
+                if ( currentQuestionIndex == 9) {
+    
+                    buttonNext.innerHTML ="Check Results"
+    
+                }
+            }
+            
+            else {
+            
+                closeModal();
+                hideView();
+                results.classList.remove("d-none")
+                scoreResults.innerText= ` Enhorabuena ${user.value}, tu puntuacion es ${rightAnswers}/ 10`
 
-});
+                buttonReStart.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    rightAnswers = 0;
+                    hideView();
+                    quiz.classList.remove("d-none");
+                    currentQuestionIndex = 0;
+                    nextQuestion(arrayQuestions);
+                })
+                
+            }
+
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+
+};
+questionsAPI()

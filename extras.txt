@@ -23,3 +23,5 @@ Cosas pendientes:
 3- Revisar preguntas si hay que hacer algo para reescribir 
 
 4- Revisar qué componenetes finales tiene cada parte para modificarlo en el readme. ver si al final tenemos más retos. En la parte de js, mejor foto con colores, o copia de codigo?
+
+5- URL API hacer segun clase 09/05 
