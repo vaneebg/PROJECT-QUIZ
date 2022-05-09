@@ -20,7 +20,7 @@ const progressBar = document.getElementById("progressBar")
 
 
 
-let images = ["./Assets/a1.jpg","./Assets/a2.jpg","./Assets/a3.jpg","./Assets/a4.jpg",]
+let images = ["./Assets/a1.jpg", "./Assets/a2.jpg", "./Assets/a3.jpg", "./Assets/a4.jpg", ]
 let currentQuestionIndex;
 
 
@@ -45,7 +45,7 @@ function closeModal() {
     myModal.hide();
 }
 
-function saveData(){
+function saveData() {
 
     const data = {
         userName: user.value,
@@ -54,16 +54,17 @@ function saveData(){
     users.push(data)
 
     localStorage.setItem('USERS', JSON.stringify(users))
-    
+
 
 }
-function printData(userName,userScore){
-    let usersBack = JSON.parse(localStorage.getItem('USERS'))
-    
-// Ordena puntuaciones de mayor a menor
-    usersBack.sort((a,b) => b.userScore - a.userScore);
 
-    scoreResults.innerHTML= ` Hey, ${userName} you have scored ${userScore}/10 correct answers!
+function printData(userName, userScore) {
+    let usersBack = JSON.parse(localStorage.getItem('USERS'))
+
+    // Ordena puntuaciones de mayor a menor
+    usersBack.sort((a, b) => b.userScore - a.userScore);
+
+    scoreResults.innerHTML = ` Hey, ${userName} you have scored ${userScore}/10 correct answers!
     <br>
     Check the score of other players below o(^▽^)o
     <br>
@@ -72,7 +73,7 @@ function printData(userName,userScore){
     `
     usersBack.forEach(user => {
         console.log(user)
-       
+
         scoreResults.innerHTML += `
                         <div class="card" style="width: 30rem;">
                         <div class="card-header text-center">
@@ -86,10 +87,9 @@ function printData(userName,userScore){
                             `
 
     })
-    
+
 }
 
- printData()
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
@@ -156,9 +156,7 @@ const questionsAPI = async() => {
         const arrayAPI = await axios.get(
             "https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple"
         );
-
         let arrayQuestions = [];
-
         arrayAPI.data.results.forEach((element) => {
             const {
                 correct_answer: correctAnswer,
@@ -171,36 +169,23 @@ const questionsAPI = async() => {
                 .replaceAll(/&quot;/gi, "")
                 .replaceAll(/&#039;/gi, "");
             const arrayQuestions1 = [questionClear, correctAnswer, randomAnswers];
-
             arrayQuestions.push(arrayQuestions1);
         });
         buttonStart.addEventListener("click", (e) => {
             e.preventDefault();
-            if( user.value == ""){
-               alert.className = "alert alert-danger text-center"
-               alert.innerText = "Please, introduce an username ಠ益ಠ)!"
-
-              
+            if (user.value == "") {
+                alert.className = "alert alert-danger text-center"
+                alert.innerText = "Please, introduce an username ಠ益ಠ)!"
+            } else {
+                rightAnswers = 0;
+                hideView();
+                quiz.classList.remove("d-none");
+                currentQuestionIndex = 0;
+                nextQuestion(arrayQuestions);
             }
-
-            else {
-            rightAnswers = 0;
-            hideView();
-            quiz.classList.remove("d-none");
-            currentQuestionIndex = 0;
-            
-
-
-
-            
-            
-            nextQuestion(arrayQuestions);
-
-            } 
-            setTimeout( () =>{
-                alert.className ="d-none"
-            },4000)
-            
+            setTimeout(() => {
+                alert.className = "d-none"
+            }, 4000)
         });
 
         buttonNext.addEventListener("click", () => {
@@ -208,58 +193,24 @@ const questionsAPI = async() => {
                 currentQuestionIndex++;
                 nextQuestion(arrayQuestions)
                 console.log(currentQuestionIndex)
-                if ( currentQuestionIndex == 9) {
-                    buttonNext.innerHTML ="Check Results"
+                if (currentQuestionIndex == 9) {
+                    buttonNext.innerHTML = "Check Results"
                 }
-            }
-            
-            else {
+            } else {
                 saveData()
                 closeModal();
                 hideView();
                 results.classList.remove("d-none")
-                printData(user.value,rightAnswers)
-                // scoreResults.innerText= ` Hey, ${user.value}. You have scored ${rightAnswers}/ 10 correct answers!
-                // `
-
-                
-                
-
-                // scoreResults.innerHTML = `
-                
-                //         <div class="card" style="width: 30rem;">
-                //                 <div class="card-header text-center">
-                //                     Username
-                //                 </div>
-                //                 <li style="border:none" class="list-group-item text-center">
-                //                     Puntos
-                //                 </li>
-                //         </div>
-                
-                
-                
-                
-                //             `
-
-
-
-
-
-
+                printData(user.value, rightAnswers)
                 buttonReStart.addEventListener("click", (e) => {
-                   
                     hideView();
                     home.classList.remove("d-none");
-                    
+
                 })
-                
             }
-
         })
-
     } catch (error) {
         console.error(error)
     }
-
 };
 questionsAPI()
