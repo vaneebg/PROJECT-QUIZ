@@ -5,8 +5,7 @@ const buttonNext = document.getElementById("buttonNext");
 const buttonStart = document.getElementById("buttonStart");
 const buttonReStart = document.getElementById("buttonReStart");
 const myModal = new bootstrap.Modal(
-  document.getElementById("staticBackdrop"),
-  {}
+    document.getElementById("staticBackdrop"), {}
 );
 const questionTitle = document.getElementById("question");
 const answerOptions = document.getElementById("answerOptions");
@@ -17,25 +16,25 @@ const alert = document.getElementById("alert");
 const progressBar = document.getElementById("progressBar");
 
 let images = [
-  "./Assets/option1.png",
-  "./Assets/option2.png",
-  "./Assets/option3.png",
-  "./Assets/option4.png",
+    "./Assets/option1.png",
+    "./Assets/option2.png",
+    "./Assets/option3.png",
+    "./Assets/option4.png",
 ];
 let currentQuestionIndex;
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem("USERS")) || [];
 
 function hideView() {
-  home.classList.add("d-none");
-  quiz.classList.add("d-none");
-  results.classList.add("d-none");
+    home.classList.add("d-none");
+    quiz.classList.add("d-none");
+    results.classList.add("d-none");
 }
 function openModal() {
-  myModal.show();
+    myModal.show();
 }
 function closeModal() {
-  myModal.hide();
+    myModal.hide();
 }
 
 function saveData() {
@@ -46,6 +45,7 @@ function saveData() {
   users.push(data);
   localStorage.setItem("USERS", JSON.stringify(users));
 }
+
 function printData(userName, userScore) {
   let usersBack = JSON.parse(localStorage.getItem("USERS"));
   // Ordena puntuaciones de mayor a menor
@@ -95,32 +95,32 @@ const showQuestion = (currentQuestion) => {
                                 </div>
                             </div>            
                       `;
-    card.addEventListener("click", function selectAnswer() {
-      Array.from(answerOptions.children).forEach((card) => {
-        setStatusClass(card, card.dataset.correct);
-      });
-      modalResponse.innerHTML = `${currentQuestion[1]}`;
-      openModal();
-      if (answer === currentQuestion[1]) {
-        rightAnswers++;
-      }
+        card.addEventListener("click", function selectAnswer() {
+            Array.from(answerOptions.children).forEach((card) => {
+                setStatusClass(card, card.dataset.correct);
+            });
+            modalResponse.innerHTML = `${currentQuestion[1]}`;
+            openModal();
+            if (answer === currentQuestion[1]) {
+                rightAnswers++;
+            }
+        });
+        answerOptions.appendChild(card);
     });
-    answerOptions.appendChild(card);
-  });
 
-  Array.from(answerOptions.children).forEach((card) => {
-    if (card.innerText == currentQuestion[1]) card.dataset.correct = true;
-  });
+    Array.from(answerOptions.children).forEach((card) => {
+        if (card.innerText == currentQuestion[1]) card.dataset.correct = true;
+    });
 };
 const resetState = () => {
-  closeModal();
-  while (answerOptions.firstChild) {
-    answerOptions.removeChild(answerOptions.firstChild);
-  }
+    closeModal();
+    while (answerOptions.firstChild) {
+        answerOptions.removeChild(answerOptions.firstChild);
+    }
 };
 const nextQuestion = (data) => {
-  resetState();
-  showQuestion(data[currentQuestionIndex]);
+    resetState();
+    showQuestion(data[currentQuestionIndex]);
 };
 
 const questionsAPI = async () => {
