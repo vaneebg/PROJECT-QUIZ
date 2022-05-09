@@ -14,6 +14,7 @@ const scoreResults = document.getElementById("scoreResults")
 const user = document.getElementById("user")
 let currentQuestionIndex;
 let rightAnswers = 0;
+let users = JSON.parse(localStorage.getItem('USERS')) || []
 
 
 function hideView() {
@@ -29,6 +30,18 @@ function openModal() {
 function closeModal() {
     myModal.hide();
 }
+
+function saveData(){
+
+    const data = {
+        userName: user.value,
+        userScore: rightAnswers
+    }
+    users.push(data)
+
+    localStorage.setItem('USERS', JSON.stringify(users))
+
+}
 const setStatusClass = (cardElement, cardValue) => {
     if (cardValue) {
         cardElement.children[0].className = "card bg-success";
@@ -39,7 +52,6 @@ const setStatusClass = (cardElement, cardValue) => {
 
 };
 
-// pendiente
 
 
 const showQuestion = (currentQuestion) => {
@@ -127,9 +139,7 @@ const questionsAPI = async() => {
                 nextQuestion(arrayQuestions)
                 console.log(currentQuestionIndex)
                 if ( currentQuestionIndex == 9) {
-    
                     buttonNext.innerHTML ="Check Results"
-    
                 }
             }
             
@@ -139,14 +149,14 @@ const questionsAPI = async() => {
                 hideView();
                 results.classList.remove("d-none")
                 scoreResults.innerText= ` Enhorabuena ${user.value}, tu puntuacion es ${rightAnswers}/ 10`
+                saveData()
+
 
                 buttonReStart.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    rightAnswers = 0;
+                   
                     hideView();
-                    quiz.classList.remove("d-none");
-                    currentQuestionIndex = 0;
-                    nextQuestion(arrayQuestions);
+                    home.classList.remove("d-none");
+                    
                 })
                 
             }
