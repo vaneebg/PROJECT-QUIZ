@@ -14,7 +14,6 @@ const scoreResults = document.getElementById("scoreResults")
 const user = document.getElementById("user")
 
 let images = ["./Assets/a1.jpg","./Assets/a2.jpg","./Assets/a3.jpg","./Assets/a4.jpg",]
-console.log(images)
 let currentQuestionIndex;
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem('USERS')) || []
@@ -43,6 +42,12 @@ function saveData(){
     users.push(data)
 
     localStorage.setItem('USERS', JSON.stringify(users))
+
+}
+function printData(){
+    let usersBack = JSON.parse(localStorage.getItem('USERS'))
+    
+
 
 }
 const setStatusClass = (cardElement, cardValue) => {
