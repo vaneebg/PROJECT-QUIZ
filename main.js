@@ -14,7 +14,9 @@ const scoreResults = document.getElementById("scoreResults");
 const user = document.getElementById("user");
 const alert = document.getElementById("alert");
 const progressBar = document.getElementById("progressBar");
-
+// boton 1 datapersonal
+const btn = document.getElementById("showChart") || [];
+const hideChart = document.getElementById("hideChart");
 let images = [
     "./Assets/option1.png",
     "./Assets/option2.png",
@@ -24,6 +26,17 @@ let images = [
 let currentQuestionIndex;
 let rightAnswers = 0;
 let users = JSON.parse(localStorage.getItem("USERS")) || [];
+
+btn.addEventListener("click", function visibility() {
+    console.log(hideChart.className)
+    if (hideChart.className !== "d-flex") {
+        hideChart.className = "d-flex"
+    } else {
+        hideChart.className = "d-none"
+    }
+})
+
+
 
 function hideView() {
     home.classList.add("d-none");
@@ -55,8 +68,8 @@ function printChart(users) {
 
         labels: users.map(user => user.userName),
         datasets: [{
-            label: 'RESULTADOS',
-            backgroundColor: ['#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347'],
+
+            backgroundColor: ['#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347', '#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347'],
             borderColor: ['rgba(116, 72, 194, 1)', 'rgba(33, 192, 215, 1)', 'rgba(217, 158, 43, 1)', 'rgba(205, 58, 129, 1)', 'rgba(156, 153, 204, 1)', 'rgba(225, 78, 202, 1)'],
             data: users.map(user => user.userScore),
         }]
@@ -65,10 +78,15 @@ function printChart(users) {
         type: 'bar',
         data: data,
         options: {
+            plugins: {
+                label: {
+                    display: false,
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
-                        stepSize: 1,
+                        stepSize: 2,
                         max: 10,
                         min: 0,
                     },
