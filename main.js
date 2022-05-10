@@ -36,8 +36,6 @@ btn.addEventListener("click", function visibility() {
     }
 })
 
-
-
 function hideView() {
     home.classList.add("d-none");
     quiz.classList.add("d-none");
