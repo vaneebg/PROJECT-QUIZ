@@ -69,7 +69,7 @@ function printChart(users) {
         labels: users.map(user => user.userName),
         datasets: [{
 
-            backgroundColor: ['#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347', '#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347'],
+            backgroundColor: ['#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347', '#23F0C7', '#EF767A', '#7D7ABC', '#337357', '#337357', '#FFE347',],
             borderColor: ['rgba(116, 72, 194, 1)', 'rgba(33, 192, 215, 1)', 'rgba(217, 158, 43, 1)', 'rgba(205, 58, 129, 1)', 'rgba(156, 153, 204, 1)', 'rgba(225, 78, 202, 1)'],
             data: users.map(user => user.userScore),
         }]
@@ -78,11 +78,9 @@ function printChart(users) {
         type: 'bar',
         data: data,
         options: {
-            plugins: {
-                label: {
-                    display: false,
-                }
-            },
+            legend: {
+                display: false
+             },
             scales: {
                 yAxes: [{
                     ticks: {
