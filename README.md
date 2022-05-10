@@ -10,6 +10,7 @@
     
 
 * Descripción del proyecto
+    * Vista previa versión PC
     * Parte de HTML
     * Parte Bootstrap
     * Parte CSS
@@ -65,6 +66,16 @@ git clone https://github.com/vaneebg/PROJECT-QUIZ
 
 
 <h2 align="center"><b>Descripción del proyecto</b><phase-one></h2>
+
+### Vista previa versión PC
+- Home
+![foto](/Assets/iniciopc.png)
+- Quiz
+![foto](/Assets/quizpc.png)
+![foto](/Assets/iniciocp2.png)
+- Results
+![foto](/Assets/resultspc1.png)
+![foto](/Assets/resultspc2.png)
 
 ### Parte de HTML
 El archivo de HTML consta de tres secciones diferenciadas:
@@ -182,11 +193,6 @@ Al trabajar en equipo, tenemos que lidiar con diversas dificultades, como por ej
         * Varios addEventListeners no funcionaban como requería la aplicación: Si utilizábamos los addEventListeners fuera de la asincronía, los datos muchas veces no llegaban a la función que estábamos llamando. También se producían otros errores como en el addEventListener del botón Next, ya que el índice empezaba a comportarse de forma errática, sumando mal por la pregunta que va el usuario.
         
 
-
-
-
-
-## Vista previa Responsive
 
 <br>
 
