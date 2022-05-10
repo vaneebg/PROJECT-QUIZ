@@ -85,7 +85,7 @@ El archivo de HTML consta de tres secciones diferenciadas:
 - Sección QUIZ: Es la parte correspondiente al cuestionario en sí. Primero tendremos la pregunta y se dibujarán 4 respuestas abajo en forma de cards. Una vez el usuario pinche la card que considere, se abrirá un Modal diciéndole cuál era la respuesta correcta con un butón de siguiente cuestión. Así hasta el total de las 10 preguntas. Además arriba se irá rellenando una barra de progreso conforme avancemos por las preguntas:
 ![foto](/Assets/quiz.png)
 
-- Sección RESULTS: nos mostrará nuestra puntuación y abajo tendremos una lista ordenada de mayor a menor puntuación con los usuarios anteriores que hayan hecho el quiz:
+- Sección RESULTS: nos mostrará nuestra puntuación y abajo tendremos una lista ordenada de mayor a menor puntuación con los usuarios anteriores que hayan hecho el quiz. Además habrá un botón para mostrarte una gráfica de barras con todos los resultados hasta ahora jugados:
 ![foto](/Assets/results.png)
 
 ### Parte Bootstrap
