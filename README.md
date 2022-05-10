@@ -96,7 +96,7 @@ Para no entorpecer a Bootstrap, sirviéndonos del conocimiento sobre la especifi
 
 ### Parte Javascript
 Para empezar con el archivo Javascript, tenemos declaradas las diferentes variables que vamos a utilizar:
-FOTO
+![foto](/Assets/variables.png)
 
 
 Como se puede observar, hemos cogido las partes del DOM que vamos a necesitar, tanto las 3 secciones como los botones que harán diferentes tareas, además del modal en sí, y la declaración de dos últimas variables que usaremos en las funciones.
