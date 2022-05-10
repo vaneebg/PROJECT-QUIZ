@@ -10,6 +10,7 @@
     
 
 * Descripción del proyecto
+    * Vista previa versión PC
     * Parte de HTML
     * Parte Bootstrap
     * Parte CSS
@@ -65,6 +66,16 @@ git clone https://github.com/vaneebg/PROJECT-QUIZ
 
 
 <h2 align="center"><b>Descripción del proyecto</b><phase-one></h2>
+
+### Vista previa versión PC
+- Home
+![foto](/Assets/iniciopc.png)
+- Quiz
+![foto](/Assets/quizpc.png)
+![foto](/Assets/iniciocp2.png)
+- Results
+![foto](/Assets/resultspc1.png)
+![foto](/Assets/resultspc2.png)
 
 ### Parte de HTML
 El archivo de HTML consta de tres secciones diferenciadas:
@@ -148,6 +159,10 @@ Sin embargo, si ya no quedasen más preguntas, lo que hará será:
 * Llamar a la función saveData: ésta crea un objeto con nuestro nobmre de usuario y nuestra puntuación. Posteriormente se hace push sobre el array declarado arriba del archivo js como vacío en caso de que no haya nada en localStorage, y finalmente guarda este array en él.
 ![foto](/Assets/savedata.png) 
 * Llamar a la función printData: en ella primero se declara la variable usersBack que serán los datos recogidos mediante JSON.parse de localStorage.
+* Llama a la función printChart:
+    * ![foto](/Assets/printchart.png)
+    Esta función coge el parámetro users y nos crea la variable data dentro de la cual las labels serán los nombres de usuario y dentro de datasets, la data será la propia puntuación.
+    Con todo esto, anexando la biblioteca de ChartJS, nos pinta una gráfica  de tipo barras en el canvas que tenemos preparada en HTML.
 Después ordena de mayor a menor las puntuaciones de los usuarios y, por último, pinta en el HTML el resultado del último usuario. Posteriormente, recorre el bucle de todos los usuarios anteriores guardados en localStorage y los va pintando dentro de cards.
 * Llamar a la función closeModal, que cerrará nuestro modal además de la función que vimos anteriormente hideView, y por último, haremos visible la sección resultados.
      
@@ -179,11 +194,6 @@ Al trabajar en equipo, tenemos que lidiar con diversas dificultades, como por ej
         
 
 
-
-
-
-## Vista previa Responsive
-
 <br>
 
 
@@ -203,6 +213,7 @@ Al trabajar en equipo, tenemos que lidiar con diversas dificultades, como por ej
 
 
 ## Agradecimientos
+En especial a nuestro TA por ayudarnos a varios problemas de asincronías:
 -[Germán](https://github.com/GeerDev)
 
 

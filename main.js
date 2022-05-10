@@ -62,8 +62,6 @@ function saveData() {
 }
 
 function printChart(users) {
-
-
     const data = {
 
         labels: users.map(user => user.userName),
